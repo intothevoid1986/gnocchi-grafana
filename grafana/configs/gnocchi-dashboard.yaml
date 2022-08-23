@@ -1,0 +1,225 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gnocchi-dashboard
+  namespace: grafana
+  labels:
+    grafana_dashboard: "1"
+data:
+  dashboard.json: |-
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "target": {
+              "limit": 100,
+              "matchAny": false,
+              "tags": [],
+              "type": "dashboard"
+            },
+            "type": "dashboard"
+          }
+        ]
+      },
+      "description": "",
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "links": [],
+      "liveNow": false,
+      "panels": [
+        {
+          "datasource": {
+            "type": "gnocchixyz-gnocchi-datasource",
+            "uid": "Gnocchi"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "smooth",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          "id": 2,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "table",
+              "placement": "right"
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "aggregator": "none found",
+              "datasource": {
+                "type": "gnocchixyz-gnocchi-datasource",
+                "uid": "Gnocchi"
+              },
+              "draw_missing_datapoint_as_zero": false,
+              "fill": 0,
+              "granularity": "600",
+              "groupby": "display_name",
+              "label": "${display_name}",
+              "metric_id": "fd679a8d-8b07-4148-935a-2e7715149279",
+              "metric_name": "vcpus",
+              "needed_overlap": 0,
+              "operations": "(metric vcpus sum)",
+              "queryMode": "dynamic_aggregates",
+              "ready_metric": false,
+              "reaggregator": "none",
+              "refId": "A",
+              "resource_id": "d4439dbc-d107-440c-a98f-39799b2067b5",
+              "resource_search": "id in [[INSTANCE]]",
+              "resource_type": "instance"
+            }
+          ],
+          "title": "vCPUs",
+          "type": "timeseries"
+        }
+      ],
+      "schemaVersion": 36,
+      "style": "dark",
+      "tags": [],
+      "templating": {
+        "list": [
+          {
+            "current": {
+              "selected": true,
+              "text": [
+                "optimizer",
+                "test-cluster-2-node-eraiyc",
+                "test-cluster-2-node-ay4ukz",
+                "test-cluster-2-node-ukp8dm",
+                "test-cluster-2-master-3-t1nlrc",
+                "test-cluster-2-master-1-spicjo",
+                "test-cluster-2-master-2-oq4lu0",
+                "bastions-77phgz"
+              ],
+              "value": [
+                "767149b8-4f5f-4fba-b6a0-b4994b55f265",
+                "28f6a2e6-e823-425a-828f-4cf591888c1a",
+                "99962585-9663-4bc9-8309-1b18d45bfed5",
+                "a0118897-2732-4b93-b01d-ed6000bf4657",
+                "83d859d0-4ee4-4896-8922-91e19431212c",
+                "f0fb8918-0d02-4f5f-8007-3ca07276884e",
+                "e58fea7d-447f-47ad-b708-dba923a156a0",
+                "1a1374d0-9333-4512-80ed-384ef22d053b"
+              ]
+            },
+            "datasource": {
+              "type": "gnocchixyz-gnocchi-datasource",
+              "uid": "Gnocchi"
+            },
+            "definition": "resources(instance, $display_name, $id, {})",
+            "description": "Gather instances from O.Cloud",
+            "error": {
+              "message": "Datasource yDakoDm4z was not found"
+            },
+            "hide": 0,
+            "includeAll": true,
+            "label": "Instances",
+            "multi": true,
+            "name": "INSTANCE",
+            "options": [],
+            "query": "resources(instance, $display_name, $id, {})",
+            "refresh": 2,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 0,
+            "type": "query"
+          },
+          {
+            "current": {
+              "selected": false,
+              "text": "Gnocchi",
+              "value": "Gnocchi"
+            },
+            "hide": 0,
+            "includeAll": false,
+            "multi": false,
+            "name": "DATASOURCE",
+            "options": [],
+            "query": "gnocchixyz-gnocchi-datasource",
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "type": "datasource"
+          }
+        ]
+      },
+      "time": {
+        "from": "now-6h",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "Gnocchi",
+      "uid": "FLpuNKiVz",
+      "version": 1,
+      "weekStart": ""
+    }
