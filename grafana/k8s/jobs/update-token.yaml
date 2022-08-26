@@ -26,13 +26,14 @@ spec:
                     name: openstack-auth
                     optional: false
               command: ["/bin/bash", "-c"]
-              args: [
-                  "cat /root/gnocchi-token/datasource.yaml && \
-                  ls -la /root/gnocchi-token/datasource.yaml && \
-                  sed -i 's/token:/pippo:/g' /root/gnocchi-token/datasource.yaml && \
-                  cat /root/gnocchi-token/datasource.yaml && \
-                  /usr/bin/openstack token issue",
-                ]
+              # args: [
+              #     "cat /root/gnocchi-token/datasource.yaml && \
+              #     ls -la /root/gnocchi-token/datasource.yaml && \
+              #     sed -i 's/token:/pippo:/g' /root/gnocchi-token/datasource.yaml && \
+              #     cat /root/gnocchi-token/datasource.yaml && \
+              #     /usr/bin/openstack token issue",
+              #   ]
+              args: ["cat /root/gnocchi-token/datasource.yaml"]
               volumeMounts:
                 - mountPath: "/root/gnocchi-token"
                   name: gnocchi-token
