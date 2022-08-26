@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: update-token
+  namespace: grafana
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: gnocchi-token
+              configMap:
+                name: gnocchi-datasource
+                optional: false
+          containers:
+            - name: update-token
+              image: openstacktools/openstack-client
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: OS_IDENTITY_API_VERSION
+                  value: "2"
+              envFrom:
+                - secretRef:
+                    name: openstack-auth
+                    optional: false
+              command: ["/bin/bash", "-c"]
+              args: [
+                  "cat /root/gnocchi-token/datasource.yaml && \
+                  ls -la /root/gnocchi-token/datasource.yaml && \
+                  sed -i 's/token:/pippo:/g' /root/gnocchi-token/datasource.yaml && \
+                  cat /root/gnocchi-token/datasource.yaml && \
+                  /usr/bin/openstack token issue",
+                ]
+              volumeMounts:
+                - mountPath: "/root/gnocchi-token"
+                  name: gnocchi-token
+          restartPolicy: Never
