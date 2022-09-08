@@ -6,3 +6,4 @@ harbor/values.yaml
 argocd/**
 grafana/k8s/secret/docker-hub.yaml
 docker/vendor/**
+docker/build/**
