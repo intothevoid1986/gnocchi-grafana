@@ -4,37 +4,30 @@ metadata:
   name: update-token
   namespace: grafana
 spec:
-  schedule: "*/1 * * * *"
+  schedule: "0 0 * * *"
+  concurrencyPolicy: Replace
+  suspend: false
   jobTemplate:
     spec:
       template:
         spec:
+          imagePullSecrets:
+            - name: docker-hub
+          nodeName: test-cluster-2-node-ukp8dm
           volumes:
-            - name: gnocchi-token
-              configMap:
-                name: gnocchi-datasource
+            - name: kube-config
+              secret:
                 optional: false
+                secretName: kops-auth
           containers:
             - name: update-token
-              image: openstacktools/openstack-client
+              image: intothevoid/gnocchi-token-renewal
               imagePullPolicy: IfNotPresent
-              env:
-                - name: OS_IDENTITY_API_VERSION
-                  value: "2"
               envFrom:
                 - secretRef:
                     name: openstack-auth
                     optional: false
-              command: ["/bin/bash", "-c"]
-              # args: [
-              #     "cat /root/gnocchi-token/datasource.yaml && \
-              #     ls -la /root/gnocchi-token/datasource.yaml && \
-              #     sed -i 's/token:/pippo:/g' /root/gnocchi-token/datasource.yaml && \
-              #     cat /root/gnocchi-token/datasource.yaml && \
-              #     /usr/bin/openstack token issue",
-              #   ]
-              args: ["cat /root/gnocchi-token/datasource.yaml"]
               volumeMounts:
-                - mountPath: "/root/gnocchi-token"
-                  name: gnocchi-token
+                - mountPath: /root/.kube
+                  name: kube-config
           restartPolicy: Never
