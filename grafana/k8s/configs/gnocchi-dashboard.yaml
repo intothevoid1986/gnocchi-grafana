@@ -27,6 +27,15 @@ data:
               "type": "dashboard"
             },
             "type": "dashboard"
+          },
+          {
+            "datasource": {
+              "type": "gnocchixyz-gnocchi-datasource",
+              "uid": "P5590208AF75DC079"
+            },
+            "enable": false,
+            "iconColor": "red",
+            "name": "New annotation"
           }
         ]
       },
@@ -38,17 +47,1185 @@ data:
       "liveNow": false,
       "panels": [
         {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "id": 19,
+          "panels": [],
+          "title": "Cost resume",
+          "type": "row"
+        },
+        {
           "datasource": {
             "type": "gnocchixyz-gnocchi-datasource",
-            "uid": "Gnocchi"
+            "uid": "P5590208AF75DC079"
           },
           "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "noValue": "0.00€",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "currencyEUR"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 2,
+            "y": 1
+          },
+          "id": 8,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.1.1",
+          "targets": [
+            {
+              "aggregator": "none found",
+              "datasource": {
+                "type": "gnocchixyz-gnocchi-datasource",
+                "uid": "P5590208AF75DC079"
+              },
+              "draw_missing_datapoint_as_zero": true,
+              "fill": 0,
+              "granularity": "600",
+              "groupby": "flavor_name",
+              "label": "${flavor_name}",
+              "metric_name": "none found",
+              "needed_overlap": 0,
+              "operations": "(aggregate sum (metric vcpus count))",
+              "queryMode": "dynamic_aggregates",
+              "reaggregator": "none",
+              "refId": "A",
+              "resource_search": "id in [[INSTANCE]]",
+              "resource_type": "instance"
+            }
+          ],
+          "title": "X1 Costs",
+          "transformations": [
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "e3standard.x1"
+                  },
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "Time"
+                  }
+                ],
+                "match": "all",
+                "type": "include"
+              }
+            },
+            {
+              "id": "reduce",
+              "options": {
+                "includeTimeField": false,
+                "mode": "seriesToRows",
+                "reducers": [
+                  "sum"
+                ]
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "binary": {
+                  "left": "Total",
+                  "operator": "*",
+                  "reducer": "sum",
+                  "right": "[[x1_costs_per_hours]]"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                },
+                "replaceFields": false
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Total": true,
+                  "Total * [[x1_costs_per_hours]]": false
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "Total": "",
+                  "Total * [[x1_costs_per_hours]]": "Cost"
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "notEqual",
+                      "options": {
+                        "value": "e3standard.x1"
+                      }
+                    },
+                    "fieldName": "Field"
+                  }
+                ],
+                "match": "any",
+                "type": "exclude"
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "gnocchixyz-gnocchi-datasource",
+            "uid": "P5590208AF75DC079"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "noValue": "0.00€",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "currencyEUR"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 5,
+            "y": 1
+          },
+          "id": 31,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.1.1",
+          "targets": [
+            {
+              "aggregator": "none found",
+              "datasource": {
+                "type": "gnocchixyz-gnocchi-datasource",
+                "uid": "P5590208AF75DC079"
+              },
+              "draw_missing_datapoint_as_zero": true,
+              "fill": 0,
+              "granularity": "600",
+              "groupby": "flavor_name",
+              "label": "${flavor_name}",
+              "metric_name": "none found",
+              "needed_overlap": 0,
+              "operations": "(aggregate sum (metric vcpus count))",
+              "queryMode": "dynamic_aggregates",
+              "reaggregator": "none",
+              "refId": "A",
+              "resource_search": "id in [[INSTANCE]]",
+              "resource_type": "instance"
+            }
+          ],
+          "title": "X3 Costs",
+          "transformations": [
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "e3standard.x3"
+                  },
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "Time"
+                  }
+                ],
+                "match": "all",
+                "type": "include"
+              }
+            },
+            {
+              "id": "reduce",
+              "options": {
+                "includeTimeField": false,
+                "mode": "seriesToRows",
+                "reducers": [
+                  "sum"
+                ]
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "binary": {
+                  "left": "Total",
+                  "operator": "*",
+                  "reducer": "sum",
+                  "right": "[[x3_costs_per_hours]]"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                },
+                "replaceFields": false
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Total": true,
+                  "Total * [[x1_costs_per_hours]]": false
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "Total": "",
+                  "Total * [[x1_costs_per_hours]]": "Cost"
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "notEqual",
+                      "options": {
+                        "value": "e3standard.x3"
+                      }
+                    },
+                    "fieldName": "Field"
+                  }
+                ],
+                "match": "any",
+                "type": "exclude"
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "gnocchixyz-gnocchi-datasource",
+            "uid": "P5590208AF75DC079"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "noValue": "0.00€",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "currencyEUR"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 8,
+            "y": 1
+          },
+          "id": 32,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.1.1",
+          "targets": [
+            {
+              "aggregator": "none found",
+              "datasource": {
+                "type": "gnocchixyz-gnocchi-datasource",
+                "uid": "P5590208AF75DC079"
+              },
+              "draw_missing_datapoint_as_zero": true,
+              "fill": 0,
+              "granularity": "600",
+              "groupby": "flavor_name",
+              "label": "${flavor_name}",
+              "metric_name": "none found",
+              "needed_overlap": 0,
+              "operations": "(aggregate sum (metric vcpus count))",
+              "queryMode": "dynamic_aggregates",
+              "reaggregator": "none",
+              "refId": "A",
+              "resource_search": "id in [[INSTANCE]]",
+              "resource_type": "instance"
+            }
+          ],
+          "title": "X4 Costs",
+          "transformations": [
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "e3standard.x4"
+                  },
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "Time"
+                  }
+                ],
+                "match": "all",
+                "type": "include"
+              }
+            },
+            {
+              "id": "reduce",
+              "options": {
+                "includeTimeField": false,
+                "mode": "seriesToRows",
+                "reducers": [
+                  "sum"
+                ]
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "binary": {
+                  "left": "Total",
+                  "operator": "*",
+                  "reducer": "sum",
+                  "right": "[[x4_costs_per_hours]]"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                },
+                "replaceFields": false
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Total": true,
+                  "Total * [[x1_costs_per_hours]]": false
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "Total": "",
+                  "Total * [[x1_costs_per_hours]]": "Cost"
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "notEqual",
+                      "options": {
+                        "value": "e3standard.x4"
+                      }
+                    },
+                    "fieldName": "Field"
+                  }
+                ],
+                "match": "any",
+                "type": "exclude"
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "gnocchixyz-gnocchi-datasource",
+            "uid": "P5590208AF75DC079"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "noValue": "0.00€",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "currencyEUR"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 11,
+            "y": 1
+          },
+          "id": 33,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.1.1",
+          "targets": [
+            {
+              "aggregator": "none found",
+              "datasource": {
+                "type": "gnocchixyz-gnocchi-datasource",
+                "uid": "P5590208AF75DC079"
+              },
+              "draw_missing_datapoint_as_zero": true,
+              "fill": 0,
+              "granularity": "600",
+              "groupby": "flavor_name",
+              "label": "${flavor_name}",
+              "metric_name": "none found",
+              "needed_overlap": 0,
+              "operations": "(aggregate sum (metric vcpus count))",
+              "queryMode": "dynamic_aggregates",
+              "reaggregator": "none",
+              "refId": "A",
+              "resource_search": "id in [[INSTANCE]]",
+              "resource_type": "instance"
+            }
+          ],
+          "title": "X5 Costs",
+          "transformations": [
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "e3standard.x5"
+                  },
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "Time"
+                  }
+                ],
+                "match": "all",
+                "type": "include"
+              }
+            },
+            {
+              "id": "reduce",
+              "options": {
+                "includeTimeField": false,
+                "mode": "seriesToRows",
+                "reducers": [
+                  "sum"
+                ]
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "binary": {
+                  "left": "Total",
+                  "operator": "*",
+                  "reducer": "sum",
+                  "right": "[[x5_costs_per_hours]]"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                },
+                "replaceFields": false
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Total": true,
+                  "Total * [[x1_costs_per_hours]]": false
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "Total": "",
+                  "Total * [[x1_costs_per_hours]]": "Cost"
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "notEqual",
+                      "options": {
+                        "value": "e3standard.x5"
+                      }
+                    },
+                    "fieldName": "Field"
+                  }
+                ],
+                "match": "any",
+                "type": "exclude"
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "gnocchixyz-gnocchi-datasource",
+            "uid": "P5590208AF75DC079"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "noValue": "0.00€",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "currencyEUR"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 14,
+            "y": 1
+          },
+          "id": 34,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.1.1",
+          "targets": [
+            {
+              "aggregator": "none found",
+              "datasource": {
+                "type": "gnocchixyz-gnocchi-datasource",
+                "uid": "P5590208AF75DC079"
+              },
+              "draw_missing_datapoint_as_zero": true,
+              "fill": 0,
+              "granularity": "600",
+              "groupby": "flavor_name",
+              "label": "${flavor_name}",
+              "metric_name": "none found",
+              "needed_overlap": 0,
+              "operations": "(aggregate sum (metric vcpus count))",
+              "queryMode": "dynamic_aggregates",
+              "reaggregator": "none",
+              "refId": "A",
+              "resource_search": "id in [[INSTANCE]]",
+              "resource_type": "instance"
+            }
+          ],
+          "title": "X6 Costs",
+          "transformations": [
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "e3standard.x6"
+                  },
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "Time"
+                  }
+                ],
+                "match": "all",
+                "type": "include"
+              }
+            },
+            {
+              "id": "reduce",
+              "options": {
+                "includeTimeField": false,
+                "mode": "seriesToRows",
+                "reducers": [
+                  "sum"
+                ]
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "binary": {
+                  "left": "Total",
+                  "operator": "*",
+                  "reducer": "sum",
+                  "right": "[[x6_costs_per_hours]]"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                },
+                "replaceFields": false
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Total": true,
+                  "Total * [[x1_costs_per_hours]]": false
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "Total": "",
+                  "Total * [[x1_costs_per_hours]]": "Cost"
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "notEqual",
+                      "options": {
+                        "value": "e3standard.x6"
+                      }
+                    },
+                    "fieldName": "Field"
+                  }
+                ],
+                "match": "any",
+                "type": "exclude"
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "gnocchixyz-gnocchi-datasource",
+            "uid": "P5590208AF75DC079"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "noValue": "0.00€",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "currencyEUR"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 3,
+            "x": 17,
+            "y": 1
+          },
+          "id": 35,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.1.1",
+          "targets": [
+            {
+              "aggregator": "none found",
+              "datasource": {
+                "type": "gnocchixyz-gnocchi-datasource",
+                "uid": "P5590208AF75DC079"
+              },
+              "draw_missing_datapoint_as_zero": true,
+              "fill": 0,
+              "granularity": "600",
+              "groupby": "flavor_name",
+              "label": "${flavor_name}",
+              "metric_name": "none found",
+              "needed_overlap": 0,
+              "operations": "(aggregate sum (metric vcpus count))",
+              "queryMode": "dynamic_aggregates",
+              "reaggregator": "none",
+              "refId": "A",
+              "resource_search": "id in [[INSTANCE]]",
+              "resource_type": "instance"
+            }
+          ],
+          "title": "X7 Costs",
+          "transformations": [
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "e3standard.x7"
+                  },
+                  {
+                    "config": {
+                      "id": "isNotNull",
+                      "options": {}
+                    },
+                    "fieldName": "Time"
+                  }
+                ],
+                "match": "all",
+                "type": "include"
+              }
+            },
+            {
+              "id": "reduce",
+              "options": {
+                "includeTimeField": false,
+                "mode": "seriesToRows",
+                "reducers": [
+                  "sum"
+                ]
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "binary": {
+                  "left": "Total",
+                  "operator": "*",
+                  "reducer": "sum",
+                  "right": "[[x7_costs_per_hours]]"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                },
+                "replaceFields": false
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Total": true,
+                  "Total * [[x1_costs_per_hours]]": false
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "Total": "",
+                  "Total * [[x1_costs_per_hours]]": "Cost"
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "notEqual",
+                      "options": {
+                        "value": "e3standard.x7"
+                      }
+                    },
+                    "fieldName": "Field"
+                  }
+                ],
+                "match": "any",
+                "type": "exclude"
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 8
+          },
+          "id": 21,
+          "panels": [],
+          "title": "Instance resume",
+          "type": "row"
+        },
+        {
+          "datasource": {
+            "type": "gnocchixyz-gnocchi-datasource",
+            "uid": "P5590208AF75DC079"
+          },
+          "description": "Total number of istances created by the datasource configured project_id (mean in selected interval)",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 1,
+              "displayName": "Instances",
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 5,
+            "x": 0,
+            "y": 9
+          },
+          "id": 6,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "mean"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.1.1",
+          "targets": [
+            {
+              "aggregator": "none found",
+              "datasource": {
+                "type": "gnocchixyz-gnocchi-datasource",
+                "uid": "P5590208AF75DC079"
+              },
+              "draw_missing_datapoint_as_zero": true,
+              "fill": 0,
+              "granularity": "600",
+              "groupby": "project_id",
+              "label": "${project_id}",
+              "metric_name": "none found",
+              "needed_overlap": 0,
+              "operations": "(aggregate sum (metric vcpus count))",
+              "queryMode": "dynamic_aggregates",
+              "reaggregator": "none",
+              "refId": "A",
+              "resource_search": "id in [[INSTANCE]]",
+              "resource_type": "instance"
+            }
+          ],
+          "title": "Total Instances",
+          "transformations": [
+            {
+              "id": "reduce",
+              "options": {
+                "reducers": [
+                  "max"
+                ]
+              }
+            }
+          ],
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "gnocchixyz-gnocchi-datasource",
+            "uid": "P5590208AF75DC079"
+          },
+          "description": "Falvor allocation by Flavor name",
           "fieldConfig": {
             "defaults": {
               "color": {
                 "mode": "palette-classic"
               },
               "custom": {
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              },
+              "decimals": 1,
+              "mappings": [],
+              "noValue": "N.A.",
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 19,
+            "x": 5,
+            "y": 9
+          },
+          "id": 4,
+          "options": {
+            "displayLabels": [
+              "name",
+              "percent"
+            ],
+            "legend": {
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true,
+              "values": [
+                "value"
+              ]
+            },
+            "pieType": "pie",
+            "reduceOptions": {
+              "calcs": [
+                "mean"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "asc"
+            }
+          },
+          "targets": [
+            {
+              "aggregator": "none found",
+              "datasource": {
+                "type": "gnocchixyz-gnocchi-datasource",
+                "uid": "P5590208AF75DC079"
+              },
+              "draw_missing_datapoint_as_zero": true,
+              "fill": 0,
+              "granularity": "600",
+              "groupby": "flavor_name",
+              "label": "${flavor_name}",
+              "metric_name": "none found",
+              "needed_overlap": 0,
+              "operations": "(aggregate sum (metric vcpus count))",
+              "queryMode": "dynamic_aggregates",
+              "reaggregator": "none",
+              "refId": "A",
+              "resource_search": "id in [[INSTANCE]]",
+              "resource_type": "instance"
+            }
+          ],
+          "title": "Flavor Usage",
+          "transparent": true,
+          "type": "piechart"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 16
+          },
+          "id": 23,
+          "panels": [],
+          "title": "vCPUs details",
+          "type": "row"
+        },
+        {
+          "datasource": {
+            "type": "gnocchixyz-gnocchi-datasource",
+            "uid": "P5590208AF75DC079"
+          },
+          "description": "vCPUs instance allocation",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
@@ -70,23 +1247,20 @@ data:
                 "spanNulls": false,
                 "stacking": {
                   "group": "A",
-                  "mode": "none"
+                  "mode": "normal"
                 },
                 "thresholdsStyle": {
                   "mode": "off"
                 }
               },
               "mappings": [],
+              "noValue": "N.A.",
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
                   {
                     "color": "green",
                     "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
                   }
                 ]
               }
@@ -94,10 +1268,10 @@ data:
             "overrides": []
           },
           "gridPos": {
-            "h": 9,
-            "w": 12,
+            "h": 10,
+            "w": 24,
             "x": 0,
-            "y": 0
+            "y": 17
           },
           "id": 2,
           "options": {
@@ -106,7 +1280,8 @@ data:
                 "lastNotNull"
               ],
               "displayMode": "table",
-              "placement": "right"
+              "placement": "right",
+              "showLegend": true
             },
             "tooltip": {
               "mode": "single",
@@ -139,10 +1314,205 @@ data:
             }
           ],
           "title": "vCPUs",
+          "transparent": true,
+          "type": "timeseries"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 27
+          },
+          "id": 25,
+          "panels": [],
+          "title": "Storage details",
+          "type": "row"
+        },
+        {
+          "datasource": {
+            "type": "gnocchixyz-gnocchi-datasource",
+            "uid": "P5590208AF75DC079"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 5,
+            "x": 0,
+            "y": 28
+          },
+          "id": 17,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "count"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.1.1",
+          "targets": [
+            {
+              "aggregator": "none found",
+              "datasource": {
+                "type": "gnocchixyz-gnocchi-datasource",
+                "uid": "P5590208AF75DC079"
+              },
+              "draw_missing_datapoint_as_zero": true,
+              "fill": 0,
+              "granularity": "600",
+              "groupby": "project_id",
+              "label": "${project_id}",
+              "metric_name": "none found",
+              "needed_overlap": 0,
+              "operations": "(aggregate sum (metric disk.capacity count)) ",
+              "queryMode": "dynamic_aggregates",
+              "reaggregator": "none",
+              "refId": "A",
+              "resource_search": "id in [[INSTANCE]]",
+              "resource_type": "instance"
+            }
+          ],
+          "title": "Total disk capacity",
+          "transparent": true,
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "gnocchixyz-gnocchi-datasource",
+            "uid": "P5590208AF75DC079"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "stepBefore",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "min": 11,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "decgbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 19,
+            "x": 5,
+            "y": 28
+          },
+          "id": 15,
+          "options": {
+            "legend": {
+              "calcs": [
+                "last"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "9.1.1",
+          "targets": [
+            {
+              "aggregator": "count",
+              "datasource": {
+                "type": "gnocchixyz-gnocchi-datasource",
+                "uid": "P5590208AF75DC079"
+              },
+              "draw_missing_datapoint_as_zero": true,
+              "fill": 0,
+              "granularity": "600",
+              "groupby": "display_name",
+              "label": "${display_name}",
+              "metric_name": "disk.usage",
+              "needed_overlap": 0,
+              "operations": "(metric disk.usage mean)",
+              "queryMode": "dynamic_aggregates",
+              "ready_metric": false,
+              "reaggregator": "mean",
+              "refId": "A",
+              "resource_search": "id in [[INSTANCE]]",
+              "resource_type": "instance"
+            }
+          ],
+          "title": "Disk Usage",
+          "transparent": true,
           "type": "timeseries"
         }
       ],
-      "schemaVersion": 36,
+      "refresh": "15m",
+      "schemaVersion": 37,
       "style": "dark",
       "tags": [],
       "templating": {
@@ -151,42 +1521,25 @@ data:
             "current": {
               "selected": true,
               "text": [
-                "optimizer",
-                "test-cluster-2-node-eraiyc",
-                "test-cluster-2-node-ay4ukz",
-                "test-cluster-2-node-ukp8dm",
-                "test-cluster-2-master-3-t1nlrc",
-                "test-cluster-2-master-1-spicjo",
-                "test-cluster-2-master-2-oq4lu0",
-                "bastions-77phgz"
+                "All"
               ],
               "value": [
-                "767149b8-4f5f-4fba-b6a0-b4994b55f265",
-                "28f6a2e6-e823-425a-828f-4cf591888c1a",
-                "99962585-9663-4bc9-8309-1b18d45bfed5",
-                "a0118897-2732-4b93-b01d-ed6000bf4657",
-                "83d859d0-4ee4-4896-8922-91e19431212c",
-                "f0fb8918-0d02-4f5f-8007-3ca07276884e",
-                "e58fea7d-447f-47ad-b708-dba923a156a0",
-                "1a1374d0-9333-4512-80ed-384ef22d053b"
+                "$__all"
               ]
             },
             "datasource": {
               "type": "gnocchixyz-gnocchi-datasource",
               "uid": "Gnocchi"
             },
-            "definition": "resources(instance, $display_name, $id, {})",
+            "definition": "resources(instance, ${display_name} - [${id}], id, ended_at=null)",
             "description": "Gather instances from O.Cloud",
-            "error": {
-              "message": "Datasource yDakoDm4z was not found"
-            },
             "hide": 0,
             "includeAll": true,
             "label": "Instances",
             "multi": true,
             "name": "INSTANCE",
             "options": [],
-            "query": "resources(instance, $display_name, $id, {})",
+            "query": "resources(instance, ${display_name} - [${id}], id, ended_at=null)",
             "refresh": 2,
             "regex": "",
             "skipUrlSync": false,
@@ -209,17 +1562,59 @@ data:
             "regex": "",
             "skipUrlSync": false,
             "type": "datasource"
+          },
+          {
+            "hide": 2,
+            "name": "x1_costs_per_hours",
+            "query": "1",
+            "skipUrlSync": false,
+            "type": "constant"
+          },
+          {
+            "hide": 2,
+            "name": "x3_costs_per_hours",
+            "query": "3",
+            "skipUrlSync": false,
+            "type": "constant"
+          },
+          {
+            "hide": 2,
+            "name": "x4_costs_per_hours",
+            "query": "4",
+            "skipUrlSync": false,
+            "type": "constant"
+          },
+          {
+            "hide": 2,
+            "name": "x5_costs_per_hours",
+            "query": "5",
+            "skipUrlSync": false,
+            "type": "constant"
+          },
+          {
+            "hide": 2,
+            "name": "x7_costs_per_hours",
+            "query": "7",
+            "skipUrlSync": false,
+            "type": "constant"
+          },
+          {
+            "hide": 2,
+            "name": "x6_costs_per_hours",
+            "query": "6",
+            "skipUrlSync": false,
+            "type": "constant"
           }
         ]
       },
       "time": {
-        "from": "now-6h",
+        "from": "now-30d",
         "to": "now"
       },
       "timepicker": {},
       "timezone": "",
       "title": "Gnocchi",
       "uid": "FLpuNKiVz",
-      "version": 1,
+      "version": 19,
       "weekStart": ""
     }
