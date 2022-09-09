@@ -1,0 +1,27 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: secrets-reader-binding
+  namespace: grafana
+subjects:
+  - kind: User
+    name: update-token
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: secrets-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: configmap-writer-binding
+  namespace: grafana
+subjects:
+  - kind: User
+    name: update-token
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: configmap-writer
+  apiGroup: rbac.authorization.k8s.io

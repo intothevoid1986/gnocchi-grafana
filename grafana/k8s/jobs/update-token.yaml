@@ -19,6 +19,7 @@ spec:
               secret:
                 optional: false
                 secretName: kops-auth
+          serviceAccountName: update-token
           containers:
             - name: update-token
               image: intothevoid/gnocchi-token-renewal
