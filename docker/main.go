@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gnocchi.irideos.it/m/v2/openstack-kubectl/pkg"
+	"gnocchi.irideos.it/m/v2/pkg"
 )
 
 func main() {

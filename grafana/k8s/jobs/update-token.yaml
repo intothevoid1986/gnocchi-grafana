@@ -3,6 +3,9 @@ kind: CronJob
 metadata:
   name: update-token
   namespace: grafana
+  labels:
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/component: cronjob
 spec:
   schedule: "0 0 * * *"
   concurrencyPolicy: Replace
@@ -14,11 +17,6 @@ spec:
           imagePullSecrets:
             - name: docker-hub
           nodeName: test-cluster-2-node-ukp8dm
-          volumes:
-            - name: kube-config
-              secret:
-                optional: false
-                secretName: kops-auth
           serviceAccountName: update-token
           containers:
             - name: update-token
@@ -28,7 +26,4 @@ spec:
                 - secretRef:
                     name: openstack-auth
                     optional: false
-              volumeMounts:
-                - mountPath: /root/.kube
-                  name: kube-config
           restartPolicy: Never

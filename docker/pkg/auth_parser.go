@@ -1,9 +1,10 @@
 package pkg
 
 import (
+	"log"
 	"os"
 
-	"gnocchi.irideos.it/m/v2/openstack-kubectl/utils"
+	"gnocchi.irideos.it/m/v2/utils"
 
 	"github.com/gophercloud/gophercloud"
 	"github.com/gophercloud/gophercloud/openstack"
@@ -28,5 +29,6 @@ func (auth *authentication) authenticate() string {
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 	utils.HandleError(err)
+	log.Print("new token issued")
 	return client.TokenID
 }
